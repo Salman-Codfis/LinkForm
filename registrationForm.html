@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Candidate Registration Form</title>
+</head>
+<body>
+    <h2>Candidate Registration Form</h2>
+    <form id="registrationForm" action="submit_form" method="post">
+        <label for="fullName">Full Name (as per PAN Card):</label><br>
+        <input type="text" id="fullName" name="fullName" required><br><br>
+
+        <label for="dob">Date of Birth:</label><br>
+        <input type="date" id="dob" name="dob" required><br><br>
+
+        <label for="email">Email ID:</label><br>
+        <input type="email" id="email" name="email" required><br><br>
+
+        <label for="mobile">Mobile Number:</label><br>
+        <input type="tel" id="mobile" name="mobile" required><br><br>
+
+        <label for="workStatus">Work Status:</label><br>
+        <input type="radio" id="fresher" name="workStatus" value="Fresher" required> Fresher<br>
+        <input type="radio" id="experienced" name="workStatus" value="Experienced" required> Experienced<br><br>
+
+        <div id="experienceDetails" style="display:none;">
+            <label for="totalYears">Total Years of Experience:</label><br>
+            <input type="number" id="totalYears" name="totalYears" required><br><br>
+        </div>
+
+        <label for="interviewPreference">Preferred Interview Type:</label><br>
+        <input type="radio" id="virtual" name="interviewPreference" value="Virtual" required> Virtual Interview<br>
+        <input type="radio" id="face2face" name="interviewPreference" value="Face2Face" required> Face-to-Face<br><br>
+
+        <div id="virtualDetails" style="display:none;">
+            <label for="upiID">Google Pay UPI ID:</label><br>
+            <input type="text" id="upiID" name="upiID" pattern="[a-zA-Z0-9.\-_]+@[a-zA-Z]+" title="Enter a valid UPI ID" required><br><br>
+
+            <label for="registrationFee">Registration Fee: INR 35</label><br>
+            <input type="button" id="paymentButton" value="Pay Now"><br><br>
+
+            <label for="timeSlot">Preferred Time Slot:</label><br>
+            <input type="radio" id="morning" name="timeSlot" value="Morning" required> Morning Slots<br>
+            <input type="radio" id="afternoon" name="timeSlot" value="Afternoon" required> Afternoon Slots<br>
+            <input type="radio" id="evening" name="timeSlot" value="Evening" required> Evening Slots<br><br>
+        </div>
+
+        <input type="submit" value="Submit">
+    </form>
+
+    <script>
+        document.getElementById('experienced').addEventListener('click', function() {
+            document.getElementById('experienceDetails').style.display = 'block';
+        });
+
+        document.getElementById('fresher').addEventListener('click', function() {
+            document.getElementById('experienceDetails').style.display = 'none';
+        });
+
+        document.getElementById('virtual').addEventListener('click', function() {
+            document.getElementById('virtualDetails').style.display = 'block';
+        });
+
+        document.getElementById('face2face').addEventListener('click', function() {
+            document.getElementById('virtualDetails').style.display = 'none';
+        });
+
+        document.getElementById('paymentButton').addEventListener('click', function() {
+            const upiID = document.getElementById('upiID').value;
+            if (upiID.match(/^[a-zA-Z0-9.\-_]+@[a-zA-Z]+$/)) {
+                // Redirect to Google Pay with the UPI ID
+                window.location.href = `upi://pay?pa=${upiID}&pn=CandidateRegistration&mc=0000&tid=0123456789&tr=1234ABCD&tn=Registration+Fee&am=35.00&cu=INR`;
+            } else {
+                alert('Please enter a valid Google Pay UPI ID.');
+            }
+        });
+    </script>
+</body>
+</html>
